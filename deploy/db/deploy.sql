@@ -12,7 +12,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-INSERT INTO `user` (`username`, `email`, `password`) VALUES ('admin', 'boxfrommars@gmail.com', MD5('myparis'));
+INSERT INTO `user` (`username`, `email`, `password`) VALUES ('admin', 'boxfrommars@gmail.com', MD5('passw0rd'));
 
 CREATE TABLE `post` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
