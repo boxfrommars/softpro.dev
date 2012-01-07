@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name='yandex-verification' content='6f5f7060a8b5b30e' />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<title>Softpro Blog</title>
+<style type="text/css" media="all">
+	html {
+		font-size: 62.5%;
+	}
+	body {
+		padding: 4% 8%;
+		font: 1.4em/1.4 "Courier New", Courier, monospace;
+	}
+	body * {
+		font-size: 1em;
+	}
+	a {
+		color: #0187C5;
+	}
+	a:hover {
+		color: #37ABDF;
+	}
+</style>
+<script>
+	document.createElement('header');
+	document.createElement('footer');
+	document.createElement('mark');
+</script>
+</head>
+
+<body>
+	<header><h1>SoftPro</h1></header>
+    <div class="content">
+        {{ content|raw }} {# raw потому что content не надо автоэскейпить #}
+    </div>
+	<!-- <footer>дизайн: надя гиммер</footer> -->
+</body>
+
+</html>

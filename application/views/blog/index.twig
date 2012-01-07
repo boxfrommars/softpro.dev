@@ -1,0 +1,8 @@
+this is blog
+{% for post in posts %}
+<div class="post">
+    <h2>{{ post.getTitle }} (post #{{ post.getId }})</h2>
+    <time>{{ post.getCreated_at }}</time>
+    <div>{{ post.getContent|raw }}</div>
+</div>
+{% endfor %}
