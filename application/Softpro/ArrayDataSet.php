@@ -1,6 +1,10 @@
 <?php
 namespace Softpro;
 
+/**
+ * реализация DataSet на массивах (пока не идёт из коробки, но в доках есть класс (ниже и представлен) для копипасты)
+ * @author phpunit.de http://www.phpunit.de/manual/current/en/database.html#available-implementations
+ */
 class ArrayDataSet extends \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
 {
     /**

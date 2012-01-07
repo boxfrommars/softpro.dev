@@ -1,23 +1,13 @@
 <?php
-
-/*
- * This file is part of the Silex framework.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Softpro;
 
 use Symfony\Component\HttpKernel\Client;
 use Symfony\Component\HttpKernel\Test\WebTestCase as BaseWebTestCase;
 
 /**
- * WebTestCase is the base class for functional tests.
- *
- * @author Igor Wiedler <igor@wiedler.ch>
+ * Silex не предоставляет класса для тестирования DB (WebTestCase наследуется от PHPUnit_FrameworkTestCase), 
+ * немного телодвижений и он становится пригодным для этого
+ * @author Dmitry Groza <boxfrommars@gmail.com>
  */
 abstract class DbWebTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
