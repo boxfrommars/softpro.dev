@@ -48,7 +48,8 @@ $app['layout'] = $app->share(function() use ($app) {
 });
 
 $app->get('/', function () use ($app) {
-    return $app['layout']->render(array('content' => 'hello, world'));
+    $app['layout.name'] = 'main.twig';
+    return $app['layout']->render(array());
 });
 
 $app->mount('/blog', new Softpro\Controller\BlogControllerProvider());

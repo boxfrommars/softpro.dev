@@ -19,7 +19,7 @@ class IndexPageTest extends WebTestCase
         
         $this->assertTrue($client->getResponse()->isOk());
         $this->assertEquals(1, count($crawler->filter('html:contains("SoftPro")')));
-        $this->assertEquals(1, count($crawler->filter('html:contains("hello")')));
+        $this->assertEquals(1, count($crawler->filter('html:contains("Hello")')));
         $this->assertEquals(1, count($crawler->filter('html:contains("world")')));
     }
 }

@@ -19,8 +19,17 @@ class BlogTest extends WebTestCase
         $crawler = $client->request('GET', '/blog/');
         
         $this->assertTrue($client->getResponse()->isOk());
-        $this->assertEquals(1, count($crawler->filter('html:contains("blog")')));
-        $this->assertEquals(1, count($crawler->filter('html:contains("post #1")')));
+        
+        
+        $this->assertEquals(1, count($crawler->filter('html:contains("Blog")')));
+        
+        $posts = $this->app['post.service']->getList();
+        foreach ($posts as $post) {
+            
+            /* @var $post \Softpro\Blog\Post */
+            $this->assertEquals(1, count($crawler->filter('html:contains("#' . $post->getId() . '")')));
+        }
+        
     }
 
     public function testPostHTML()
@@ -48,10 +57,10 @@ class BlogTest extends WebTestCase
         
         $this->assertEquals($postId, $post->getId());
         $this->assertTrue($post->hasTitle());
-        $this->assertTrue($post->hasId_user());
+        $this->assertTrue($post->hasAuthorId());
         $this->assertTrue($post->hasContent());
-        $this->assertTrue($post->hasUpdated_at());
-        $this->assertTrue($post->hasCreated_at());
+        $this->assertTrue($post->hasUpdatedAt());
+        $this->assertTrue($post->hasCreatedAt());
         $this->assertFalse($post->hasSomething());
         
         $postId = 100; // записи нет
@@ -114,9 +123,7 @@ class BlogTest extends WebTestCase
         $this->assertTrue($insertedPost instanceof Post);
         $this->assertEquals($insertedPost->getTitle(), $post->getTitle());
         $this->assertEquals($insertedPost->getContent(), $post->getContent());
-        $this->assertEquals($insertedPost->getId_user(), $post->getId_user());
-        
-        return $insertedPostId;
+        $this->assertEquals($insertedPost->getAuthorId(), $post->getAuthorId());
     }
     
     /**
@@ -142,12 +149,11 @@ class BlogTest extends WebTestCase
     public function testPostServiceDelete()
     {
         $posts = $this->app['post.service']->getList();
-        $post = array_pop($posts);
-        
-        $count = $this->app['post.service']->delete($post->getId());
+        $lastPost = array_shift($posts);
+        $count = $this->app['post.service']->delete($lastPost->getId());
         
         $this->assertEquals(1, $count);
-        $this->assertEquals(null, $this->app['post.service']->get($post->getId()));
+        $this->assertEquals(null, $this->app['post.service']->get($lastPost->getId()));
     }
     
     public function testPostServiceDeleteFailure()
@@ -178,7 +184,7 @@ class BlogTest extends WebTestCase
     public function postServiceSaveSuccessProvider()
     {
         return array(
-            array(array('id_user' => 1, 'title' => 'another article')),
+            array(array('authorId' => 1, 'title' => 'another article')),
         );
     }
 }

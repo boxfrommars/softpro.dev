@@ -1,12 +1,12 @@
 <?php
 namespace Softpro\Blog;
 
-class Post {
+class Comment {
     protected $_raw = array(
         'id' => null,
-        'title' => null,
         'authorId' => null,
         'authorName' => null,
+        'authorEmail' => null,
         'content' => null,
         'updatedAt' => null,
         'createdAt' => null

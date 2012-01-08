@@ -5,13 +5,14 @@ install
 -------
 
     $ git clone git://github.com/boxfrommars/softpro.dev.git
+    $ cd softpro.dev 
     $ cd deploy
     $ ./deploy.sh
 
     # <создать db>
 
     $ cd db
-    mysql -u youruser yourdb -p 
+    $ mysql -u youruser yourdb -p 
 
     mysql> \. deploy.sql
     mysql> \q

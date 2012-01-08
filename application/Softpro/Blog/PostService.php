@@ -34,7 +34,8 @@ class PostService {
         foreach ($listRaw as $postRaw) $list[] = new Post($postRaw);
         return $list;
     }
-    
+
+
     /**
      * @param Post $post
      * @return int count of updated/inserted rows (1 or 0) 

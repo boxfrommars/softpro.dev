@@ -1,0 +1,12 @@
+{% extends "layout.twig" %}
+
+{% block page_header %}
+    {{ post.getTitle }} (post #{{ post.getId }}) <small>{{ post.getCreatedAt }} by {{ post.getAuthorName }}</small>
+{% endblock %}
+
+{% block page_content %} 
+    <div class="post">
+        <div>{{ post.getContent|raw }}</div>
+    </div>
+    <h4 class="page-header">comments:</h4>
+{% endblock %}

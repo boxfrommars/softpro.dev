@@ -13,14 +13,19 @@ class BlogControllerProvider implements \Silex\ControllerProviderInterface
 
         $controllers->get('/', function (Application $app) {
             $posts = $app['post.service']->getList();
-            $content = $app['twig']->render('blog/index.twig', array('posts' => $posts));
-            return $app['layout']->render(array('content' => $content));
+            
+            $app['layout.name'] = 'blog/index.twig';
+            return $app['layout']->render(array('posts' => $posts));
         });
         
         $controllers->get('/{postId}', function(Application $app, $postId) {
             $post = $app['post.service']->get($postId);
             if (is_null($post)) return $app->abort(404);
-            return $app['layout']->render(array('content' => 'this is post #' . $post->getId()));
+            
+            $comments = $app['comment.service']->getPostComments($post->getId());
+            
+            $app['layout.name'] = 'blog/view.twig';
+            return $app['layout']->render(array('post' => $post));
         })->assert('post', '\d+');
 
         return $controllers;

@@ -1,5 +1,6 @@
 SET NAMES UTF8;
 
+DROP table `comment`;
 DROP TABLE `post`;
 DROP TABLE `user`;
 
@@ -33,3 +34,18 @@ INSERT INTO `post` (`id_user`, `title`, `content`, `created_at`) VALUES (
   <p>Случай мой диковинный.</p>',
   NULL
 );
+
+
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_post` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  
+  `name` tinytext,
+  `email` tinytext,
+  `content` text,
+
+  `updated_at` TIMESTAMP NOT NULL ON UPDATE NOW() DEFAULT NOW(),
+  `created_at` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
