@@ -11,8 +11,9 @@
 >
     <testsuites>
         <testsuite name="SoftPro Test Suite">
-            <file>./cases/DBTest.php</file>
-            <file>./cases/BlogTest.php</file>
+            <file>./cases/Blog/BlogDBTest.php</file>
+            <file>./cases/Blog/BlogTest.php</file>
+            <file>./cases/Blog/BlogControllerTest.php</file>
             <file>./cases/IndexPageTest.php</file>
         </testsuite>
     </testsuites>

@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../../../Silex/autoload.php';
-require __DIR__ . '/../../application/Softpro/DbWebTestCase.php';
-require __DIR__ . '/../../application/Softpro/ArrayDataSet.php';
+require_once __DIR__ . '/../../../../Silex/autoload.php';
+require __DIR__ . '/../../../application/Softpro/DbWebTestCase.php';
+require __DIR__ . '/../../../application/Softpro/ArrayDataSet.php';
 
 use Softpro\DbWebTestCase;
 use Softpro\ArrayDataSet;
@@ -67,7 +67,7 @@ class DBTest extends DbWebTestCase
     
     public function createApplication()
     {
-        require __DIR__ . '/../../application/app.php';
+        require __DIR__ . '/../../../application/app.php';
         return $app;
     }
 
@@ -97,6 +97,18 @@ class DBTest extends DbWebTestCase
         
         $post = $this->app['post.dbtable']->get($nonExistPostId);
         $this->assertTrue(empty ($post));
+    }
+    
+    public function testPostGetList()
+    {
+        $postsCount = $this->getConnection()->getRowCount('post');
+        $postList = $this->app['post.dbtable']->getList();
+        
+        $this->assertEquals($postsCount, count($postList));
+        
+        foreach ($postList as $post) {
+            $this->assertEquals($this->app['post.dbtable']->get($post['id']), $post);
+        }
     }
     
     public function testPostInsert()

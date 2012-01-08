@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../../Silex/autoload.php';
+require_once __DIR__ . '/../../../../Silex/autoload.php';
 
 use Silex\WebTestCase;
 use Softpro\Blog\Post;
@@ -9,43 +9,8 @@ class BlogTest extends WebTestCase
 {
     public function createApplication()
     {
-        require __DIR__ . '/../../application/app.php';
+        require __DIR__ . '/../../../application/app.php';
         return $app;
-    }
-
-    public function testIndexHTML()
-    {
-        $client = $this->createClient();
-        $crawler = $client->request('GET', '/blog/');
-        
-        $this->assertTrue($client->getResponse()->isOk());
-        
-        
-        $this->assertEquals(1, count($crawler->filter('html:contains("Blog")')));
-        
-        $posts = $this->app['post.service']->getList();
-        foreach ($posts as $post) {
-            
-            /* @var $post \Softpro\Blog\Post */
-            $this->assertEquals(1, count($crawler->filter('html:contains("#' . $post->getId() . '")')));
-        }
-        
-    }
-
-    public function testPostHTML()
-    {
-        $client = $this->createClient();
-        
-        $postId = 1;
-        
-        $crawler = $client->request('GET', '/blog/' . $postId);
-        $this->assertTrue($client->getResponse()->isOk());
-        $this->assertEquals(1, count($crawler->filter('html:contains("post #' . $postId . '")')));
-        
-        $postId = 100;
-        $crawler = $client->request('GET', '/blog/' . $postId);
-        $this->assertTrue($client->getResponse()->isNotFound());
-        
     }
     
     public function testPostServiceGet()
@@ -73,16 +38,6 @@ class BlogTest extends WebTestCase
         $list = $this->app['post.service']->getList();
         foreach ($list as $post) {
             $this->assertTrue($post instanceof \Softpro\Blog\Post);
-        }
-    }
-    
-    public function testPostDbTableGetList()
-    {
-        $list = $this->app['post.dbtable']->getList();
-        foreach ($list as $post) {
-            $this->assertTrue(array_key_exists('id', $post));
-            $this->assertTrue(array_key_exists('title', $post));
-            $this->assertTrue(array_key_exists('content', $post));
         }
     }
     

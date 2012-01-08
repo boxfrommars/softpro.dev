@@ -25,7 +25,7 @@ class BlogControllerProvider implements \Silex\ControllerProviderInterface
             $comments = $app['comment.service']->getPostComments($post->getId());
             
             $app['layout.name'] = 'blog/view.twig';
-            return $app['layout']->render(array('post' => $post));
+            return $app['layout']->render(array('post' => $post, 'comments' => $comments));
         })->assert('post', '\d+');
 
         return $controllers;

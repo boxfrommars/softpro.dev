@@ -9,4 +9,10 @@
         <div>{{ post.getContent|raw }}</div>
     </div>
     <h4 class="page-header">comments:</h4>
+    {% for comment in comments %}
+    <div class="comment">
+        <h5>{{ comment.getAuthorName }} <small>at {{ comment.getCreatedAt }}</small></h5>
+        <div>{{ comment.getContent|raw }}</div>
+    </div>
+    {% endfor %}
 {% endblock %}
