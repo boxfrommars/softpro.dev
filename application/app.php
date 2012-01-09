@@ -55,6 +55,7 @@ $app->get('/', function () use ($app) {
 });
 
 $app->mount('/blog', new Softpro\Controller\BlogControllerProvider());
+$app->mount('/auth', new Softpro\Controller\AuthControllerProvider());
 
 $app->after(function() use ($app) {
     $app['monolog']->addInfo('generated for: ' . (int) ((microtime(true) - $app['starttime']) * 1000) . "ms\n\n");
