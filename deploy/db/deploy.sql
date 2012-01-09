@@ -39,7 +39,7 @@ INSERT INTO `post` (`id_user`, `title`, `content`, `created_at`) VALUES (
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_post` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
+  `id_user` int(11),
   
   `name` tinytext,
   `email` tinytext,

@@ -51,16 +51,38 @@ class CommentService {
     public function save(Comment $comment) 
     {
         $id = $comment->getId();
-        if (empty($id)) {
-            $count = $this->_dbTable->insert($comment->getRaw());
+        
+        if ($this->isValid($comment)) {
+            if (empty($id) || !($this->get($id) instanceof Comment)) {
+                $comment->setId(null);
+                $count = $this->_dbTable->insert($comment->getRaw());
+            } else {
+                $count = $this->_dbTable->update($comment->getRaw(), $id);
+            }
         } else {
-            $count = $this->_dbTable->update($comment->getRaw(), $id);
+            throw new \Softpro\InvalidItemException('Invalid Comment');
         }
+        
         return $count;
     }
     
     public function delete($id)
     {
         return $this->_dbTable->delete($id);
+    }
+    
+    public function isValid(Comment $comment)
+    {
+        $valid = true;
+        $valid &= ($comment->getAuthorName() && $comment->getAuthorEmail());
+        $valid &= ($comment->getPostId());
+        
+        return $valid;
+    }
+    
+    public function isExist($id)
+    {
+        $comment = $this->get($id);
+        return !empty($comment);
     }
 }

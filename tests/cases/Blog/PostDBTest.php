@@ -1,12 +1,9 @@
 <?php
-require_once __DIR__ . '/../../../../Silex/autoload.php';
-require __DIR__ . '/../../../application/Softpro/DbWebTestCase.php';
-require __DIR__ . '/../../../application/Softpro/ArrayDataSet.php';
 
 use Softpro\DbWebTestCase;
 use Softpro\ArrayDataSet;
 
-class DBTest extends DbWebTestCase 
+class BlogPostDBTest extends DbWebTestCase 
 {
     /**
      * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
@@ -69,11 +66,6 @@ class DBTest extends DbWebTestCase
     {
         require __DIR__ . '/../../../application/app.php';
         return $app;
-    }
-
-    public function testTest()
-    {
-        $this->assertTrue(true);
     }
     
     public function testPostGet()
@@ -185,107 +177,6 @@ class DBTest extends DbWebTestCase
             array(2),
             array(3),
             array(4),
-            array(1000),
-        );
-    }
-    
-    public function testCommentGet()
-    {
-        $existedComment = array(
-                    'id' => 1,
-                    'postId' => 1,
-                    'authorId' => 1, 
-                    'authorEmail' => 'boxfrommars@gmail.com',
-                    'authorName' => 'boxfrommars',
-                    
-                    'content' => 'very useful',
-                    'updatedAt' => '2012-01-01 19:15:23',
-                    'createdAt' => '2012-01-01 19:15:23'
-                );
-        
-        
-        $nonExistCommentId = 1000;
-        
-        $comment = $this->app['comment.dbtable']->get($existedComment['id']);
-        $this->assertTrue(!empty ($comment));
-        $this->assertEquals($comment, $existedComment);
-        
-        $comment = $this->app['post.dbtable']->get($nonExistCommentId);
-        $this->assertTrue(empty ($comment));
-    }
-    
-    public function testCommentInsert()
-    {
-        $beforeCount = $this->getConnection()->getRowCount('comment');
-        $toInsert = array(
-            'authorId' => 1,
-            'authorName' => 'boxfrommars',
-            'authorEmail' => 'boxfrommars@gmail.com',
-            'postId' => 1,
-            'content' => 'Очередная статья на подходе',
-            
-            'createdAt' => null,
-            'updatedAt' => null,
-        );
-        $count = $this->app['comment.dbtable']->insert($toInsert);
-        
-        $this->assertEquals(1, $count);
-        $this->assertEquals($beforeCount + 1, $this->getConnection()->getRowCount('comment'));
-        
-        $insertedId = $this->app['db']->lastInsertId();
-        $insertedItem = $this->app['comment.dbtable']->get($insertedId);
-        
-        $compareBy = array('authorId', 'authorName', 'authorEmail', 'postId', 'content');
-        $this->assertEquals(array_intersect_key($toInsert, $compareBy), array_intersect_key($insertedItem, $compareBy));
-    }
-    
-    /**
-     * @dataProvider commentUpdateProvider
-     */
-    public function testCommentUpdate($id, $data)
-    {
-        $originalItem = $this->app['comment.dbtable']->get($id);
-        
-        $count = $this->app['comment.dbtable']->update($data, $id);
-        if (!empty($originalItem)) {
-            $this->assertEquals(1, $count);
-            $editedItem = $this->app['comment.dbtable']->get($id);
-            $this->assertEquals($data, array_intersect_key($editedItem, $data));
-        } else {
-            $this->assertEquals(0, $count);
-        }
-    }
-    
-    public function commentUpdateProvider()
-    {
-        return array(
-            array(1, array('content' => 'edited comment')),
-            array(1000, array('content' => 'edited comment')),
-        );
-    }
-    
-    /**
-     * @dataProvider commentDeleteProvider
-     */
-    public function testCommentDelete($id) 
-    {
-        $beforeCount = $this->getConnection()->getRowCount('comment');
-        $originalItem = $this->app['comment.dbtable']->get($id);
-        
-        $count = $this->app['comment.dbtable']->delete($id); 
-        if (!empty($originalItem)) {
-            $this->assertEquals(1, $count);
-            $this->assertEquals($beforeCount - 1, $this->getConnection()->getRowCount('comment'));
-        } else {
-            $this->assertEquals(0, $count);
-        }
-    }
-    
-    public function commentDeleteProvider()
-    {
-        return array(
-            array(1),
-            array(2),
             array(1000),
         );
     }

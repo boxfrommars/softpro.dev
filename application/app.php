@@ -17,6 +17,8 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.class_path'    => $app['vendor_path'] . '/monolog/src',
 ));
 
+$app->register(new Silex\Provider\SessionServiceProvider());
+
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path'       => $app['application_path'] . '/views',
     'twig.class_path' => $app['vendor_path'] . '/twig/lib',

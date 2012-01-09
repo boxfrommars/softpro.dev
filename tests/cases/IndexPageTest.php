@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../../../Silex/autoload.php';
-
 use Silex\WebTestCase;
 
 class IndexPageTest extends WebTestCase

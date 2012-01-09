@@ -1,7 +1,7 @@
-{% extends "layout.twig" %}
+{% extends "blog/index.twig" %}
 
 {% block page_header %}
-    {{ post.getTitle }} (post #{{ post.getId }}) <small>{{ post.getCreatedAt }} by {{ post.getAuthorName }}</small>
+    {{ post.getTitle }} <small>(post #{{ post.getId }}) {{ post.getCreatedAt }} by {{ post.getAuthorName }}</small>
 {% endblock %}
 
 {% block page_content %} 
@@ -9,10 +9,37 @@
         <div>{{ post.getContent|raw }}</div>
     </div>
     <h4 class="page-header">comments:</h4>
-    {% for comment in comments %}
-    <div class="comment">
-        <h5>{{ comment.getAuthorName }} <small>at {{ comment.getCreatedAt }}</small></h5>
-        <div>{{ comment.getContent|raw }}</div>
+    
+    <form action="/blog/{{ post.getId }}/comment/add" method="post">
+        <div class="clearfix">
+            <div class="input-prepend">
+                <span class="add-on">name</span>
+                <input class="medium" id="comment[authorName]" name="comment[authorName]" size="16" type="text" />
+                <span class="help-inline">required</span>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="input-prepend">
+                <span class="add-on">email</span>
+                <input class="medium email" id="comment[authorEmail]" name="comment[authorEmail]" size="16" type="text" />
+                <span class="help-inline">required</span>
+            </div>
+        </div>
+        <div class="clearfix">
+            <textarea class="xxlarge" id="comment[content]" name="comment[content]" rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn primary">Send</button>
+    </form>
+    
+    <div class="comments">
+        {% for comment in comments %}
+        <div class="row">
+            <div class="span3">
+                <b>{{ comment.getAuthorName }}</b><br />
+                <small>at {{ comment.getCreatedAt }}</small>
+            </div>
+            <div class="span3">{{ comment.getContent|raw }}</div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 {% endblock %}

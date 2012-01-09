@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <title>Softpro Blog</title>
+    <title>{% block title %}Softpro{% endblock %}</title>
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css" />
 
     <style type="text/css">
@@ -13,6 +13,9 @@
           }
           .post {
               padding-bottom: 20px;
+          }
+          .comments .row {
+              margin-bottom: 10px;
           }
           .content a {
               text-decoration: underline;
@@ -24,6 +27,7 @@
         document.createElement('mark');
     </script> 
     <script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-alerts.js"></script>
 
 </head>
 
@@ -40,12 +44,18 @@
             </div>
         </div>
     </div>
-        
+       
     <div class="container">
+        {% for type, message in app.session.getFlashes %}
+            <div class="alert-message {{ type }}" data-alert="alert">
+              <a class="close" href="#">×</a>
+              <p>{{ message }}</p>
+            </div>
+        {% endfor %}    
         <div class="content">
             {% block content %}
             <div class="page-header">
-                <h1>{% block page_header %}SoftPro: <small></small>{% endblock %}</h1>
+                <h1>{% block page_header %}SoftPro{% endblock %}</h1>
             </div>
             {% block page_content %} {{ content|raw }} {% endblock %}
             {% endblock %}

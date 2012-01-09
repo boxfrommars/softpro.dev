@@ -4,6 +4,7 @@ namespace Softpro\Blog;
 class Comment {
     protected $_raw = array(
         'id' => null,
+        'postId' => null,
         'authorId' => null,
         'authorName' => null,
         'authorEmail' => null,
@@ -25,6 +26,14 @@ class Comment {
                 $key = lcfirst(substr($name, 3));
                 if (array_key_exists($key, $this->_raw)) return $this->_raw[$key];
                 throw new \Softpro\InvalidPropertyException('Call to undefined method ' . $name);
+                break;
+            case 'set':
+                $key = lcfirst(substr($name, 3));
+                if (array_key_exists($key, $this->_raw)) {
+                    $this->_raw[$key] = $arguments[0];
+                } else {
+                    throw new \Softpro\InvalidPropertyException('Call to undefined method ' . $name);
+                }
                 break;
             case 'has':
                 $key = lcfirst(substr($name, 3));

@@ -26,6 +26,14 @@ class Post {
                 if (array_key_exists($key, $this->_raw)) return $this->_raw[$key];
                 throw new \Softpro\InvalidPropertyException('Call to undefined method ' . $name);
                 break;
+            case 'set':
+                $key = lcfirst(substr($name, 3));
+                if (array_key_exists($key, $this->_raw)) {
+                    $this->_raw[$key] = $arguments[0];
+                } else {
+                    throw new \Softpro\InvalidPropertyException('Call to undefined method ' . $name);
+                }
+                break;
             case 'has':
                 $key = lcfirst(substr($name, 3));
                 return !empty($this->_raw[$key]);

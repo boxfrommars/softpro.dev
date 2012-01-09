@@ -8,11 +8,29 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
+         bootstrap="bootstrap.php"
 >
+
+    <php>
+        <const name="foo" value="bar"/>
+        <var name="foo" value="bar"/>
+        <env name="foo" value="bar"/>
+        <post name="foo" value="bar"/>
+        <get name="foo" value="bar"/>
+        <cookie name="foo" value="bar"/>
+        <server name="foo" value="bar"/>
+        <files name="foo" value="bar"/>
+        <request name="foo" value="bar"/>
+    </php>
+
     <testsuites>
         <testsuite name="SoftPro Test Suite">
-            <file>./cases/Blog/BlogDBTest.php</file>
-            <file>./cases/Blog/BlogTest.php</file>
+
+            <file>./cases/Blog/PostDBTest.php</file>
+            <file>./cases/Blog/CommentDBTest.php</file>
+            <file>./cases/Blog/PostServiceTest.php</file>
+            <file>./cases/Blog/CommentServiceTest.php</file>
+
             <file>./cases/Blog/BlogControllerTest.php</file>
             <file>./cases/IndexPageTest.php</file>
         </testsuite>

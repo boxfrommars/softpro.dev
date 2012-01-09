@@ -1,11 +1,9 @@
 <?php
 
-require_once __DIR__ . '/../../../../Silex/autoload.php';
-
 use Silex\WebTestCase;
 use Softpro\Blog\Post;
 
-class BlogTest extends WebTestCase
+class BlogPostServiceTest extends WebTestCase
 {
     public function createApplication()
     {
