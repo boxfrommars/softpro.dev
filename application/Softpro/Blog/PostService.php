@@ -1,21 +1,43 @@
 <?php
+
 namespace Softpro\Blog;
 
-class PostService {
-    
+/**
+ * post service
+ *
+ * @category Softpro
+ * @package  Blog
+ * @author   Dmitry Groza <boxfrommars@gmail.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link     http://github.com/boxfrommars/softpro.dev
+ */
+class PostService
+{
+
     /**
      * @var PostDbTableInterface
      */
     protected $_dbTable;
-    
+
+    /**
+     * set posts db table
+     *
+     * @param PostDbTableInterface $dbTable db table
+     *
+     * @return PostService
+     */
     public function setDbTable(PostDbTableInterface $dbTable)
     {
         $this->_dbTable = $dbTable;
+        return $this;
     }
-    
+
     /**
-     * @param int $id
-     * @return Post 
+     * get post by id
+     *
+     * @param int $id post id
+     *
+     * @return Post
      */
     public function get($id)
     {
@@ -23,9 +45,11 @@ class PostService {
         if ($postRaw) return new Post($postRaw);
         return null;
     }
-    
+
     /**
-     * @return array of Post 
+     * get array of Post
+     *
+     * @return Post[]
      */
     public function getList()
     {
@@ -35,12 +59,14 @@ class PostService {
         return $list;
     }
 
-
     /**
-     * @param Post $post
-     * @return int count of updated/inserted rows (1 or 0) 
+     * save post
+     *
+     * @param Post $post post to save
+     *
+     * @return int count of updated/inserted rows (1 or 0)
      */
-    public function save(Post $post) 
+    public function save(Post $post)
     {
         $id = $post->getId();
         if (empty($id)) {
@@ -50,7 +76,14 @@ class PostService {
         }
         return $count;
     }
-    
+
+    /**
+     * delete post with given id
+     *
+     * @param int $id post id
+     *
+     * @return int count of deleted rows (1 or 0)
+     */
     public function delete($id)
     {
         return $this->_dbTable->delete($id);

@@ -3,17 +3,24 @@ namespace Softpro;
 
 /**
  * реализация DataSet на массивах (пока не идёт из коробки, но в доках есть класс (ниже и представлен) для копипасты)
- * @author phpunit.de http://www.phpunit.de/manual/current/en/database.html#available-implementations
+ *
+ * @category Softpro
+ * @package  Test
+ * @author   Dmitry Groza <boxfrommars@gmail.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link     http://github.com/boxfrommars/softpro.dev
  */
 class ArrayDataSet extends \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
 {
     /**
      * @var array
      */
-    protected $tables = array();
+    protected $_tables = array();
 
     /**
-     * @param array $data
+     * constructor
+     *
+     * @param array $data data
      */
     public function __construct(array $data)
     {
@@ -29,21 +36,35 @@ class ArrayDataSet extends \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
             foreach ($rows AS $row) {
                 $table->addRow($row);
             }
-            $this->tables[$tableName] = $table;
+            $this->_tables[$tableName] = $table;
         }
     }
 
-    protected function createIterator($reverse = FALSE)
+    /**
+     * create iterator
+     *
+     * @param bool $reverse is reversed
+     *
+     * @return \PHPUnit_Extensions_Database_DataSet_DefaultTableIterator
+     */
+    protected function createIterator($reverse = false)
     {
-        return new \PHPUnit_Extensions_Database_DataSet_DefaultTableIterator($this->tables, $reverse);
+        return new \PHPUnit_Extensions_Database_DataSet_DefaultTableIterator($this->_tables, $reverse);
     }
 
+    /**
+     * get table
+     *
+     * @param string $tableName table name
+     *
+     * @return \PHPUnit_Extensions_Database_DataSet_DefaultTable
+     */
     public function getTable($tableName)
     {
-        if (!isset($this->tables[$tableName])) {
+        if (!isset($this->_tables[$tableName])) {
             throw new InvalidArgumentException("$tableName is not a table in the current database.");
         }
 
-        return $this->tables[$tableName];
+        return $this->_tables[$tableName];
     }
 }
