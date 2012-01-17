@@ -70,8 +70,11 @@ $app->get(
 $app->mount('/blog', new Softpro\Controller\BlogControllerProvider());
 $app->mount('/auth', new Softpro\Controller\AuthControllerProvider());
 
+$app->register(new \Softpro\Provider\UserServiceProvider());
+
 $app->after(
     function() use ($app) {
         $app['monolog']->addInfo('generated for: ' . (int) ((microtime(true) - $app['starttime']) * 1000) . "ms\n\n");
+        $app['monolog']->addInfo(print_r($app['user.service']->get(1), true));
     }
 );

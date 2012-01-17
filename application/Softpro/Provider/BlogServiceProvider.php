@@ -19,7 +19,7 @@ class BlogServiceProvider implements \Silex\ServiceProviderInterface
      * Registers services on the given app.
      *
      * @param Application $app An Application instance
-     * 
+     *
      * @return null
      */
     public function register(Application $app)
@@ -29,22 +29,6 @@ class BlogServiceProvider implements \Silex\ServiceProviderInterface
                 $postDbTable = new \Softpro\Blog\PostDbTable();
                 $postDbTable->setDb($app['db']);
                 return $postDbTable;
-            }
-        );
-
-        $app['user.dbtable'] = $app->share(
-            function() use ($app) {
-                $userDbTable = new \Softpro\User\UserDbTable();
-                $userDbTable->setDb($app['db']);
-                return $userDbTable;
-            }
-        );
-
-        $app['user.service'] = $app->share(
-            function() use ($app) {
-                $userService = new \Softpro\User\UserService();
-                $userService->setDbTable($app['user.dbtable']);
-                return $userService;
             }
         );
 
